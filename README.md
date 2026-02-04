@@ -2,9 +2,12 @@
  Reads and Decodes Card Number and Expiry fields from a payment card via NFC module of an Android device. 
 
  ## Downloads
- Download the latest release of the application from [here](https://github.com/7Ragnarok7/NFC-Payment-Card-Reader/releases/tag/v1)
+ Download the latest release of the application from [here](https://github.com/7Ragnarok7/NFC-Payment-Card-Reader/releases/tag/v1)  
 
+ ## Interface
  ![image](img_src/img-1.jpg)  
+
+ ----
  
  ![image](img_src/img-2.jpg)
 
@@ -22,4 +25,4 @@ The developer assumes no liability for misuse. Users of this application are sol
 
 
 ## Reference(s)
-https://github.com/devnied/EMV-NFC-Paycard-Enrollment
+EVM NFC paycard enrollment JAVA Library: https://github.com/devnied/EMV-NFC-Paycard-Enrollment
