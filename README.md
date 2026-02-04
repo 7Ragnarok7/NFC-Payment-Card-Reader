@@ -1,8 +1,12 @@
 # NFC Payment Card Reader
- Reads and Decodes Card Number and Expiry fields from a payment card via the NFC module of an Android device. 
+ Reads and Decodes Card Number, Expiry, Cardholder's Name and Card Type fields from a payment card via the NFC module of an Android device.  
+ 
+ ***Note: Most card issuers will suppress the cardholder's name from the card.***
 
  ## Downloads
  Download the latest release of the application [here](https://github.com/7Ragnarok7/NFC-Payment-Card-Reader/releases/tag/v1)  
+ Latest Version: 2.0  
+ Updates: Added support to read the Cardholder's Name and Card Type.
 
  ## Interface
  ![image](img_src/img-1.jpg)  
