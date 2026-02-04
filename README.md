@@ -1,5 +1,5 @@
 # NFC Payment Card Reader
- Reads and Decodes Card Number and Expiry fields from a payment card via NFC module of an Android device. 
+ Reads and Decodes Card Number and Expiry fields from a payment card via the NFC module of an Android device. 
 
  ## Downloads
  Download the latest release of the application [here](https://github.com/7Ragnarok7/NFC-Payment-Card-Reader/releases/tag/v1)  
@@ -12,10 +12,10 @@
  ![image](img_src/img-2.jpg)
 
  ## Limitations
- This tool is made for android devices only.
+ This tool is made for Android devices only due to the behavioural and security constraints in IOS devices.
 
 ## Disclaimer
-This tool is provided strictly for educational and ethical research purposes, such as learning about NFC technology, understanding EMV protocols and penetration testing with authorization.
+This tool is provided strictly for educational and ethical research purposes, such as learning about NFC technology, understanding EMV protocols and penetration testing with proper authorization.
 I explicitly prohibit and disclaim all responsibility for any use of this application in the context of:
 
     Illegal Activities: Any action that violates local, national, or international laws, including but not limited to financial fraud, theft, identity theft, or unauthorized access to personal data.
