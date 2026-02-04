@@ -20,7 +20,7 @@ import com.github.devnied.emvnfccard.parser.EmvTemplate
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-// 1. Provider to bridge communication between library and hardware
+// Provider to bridge communication between library and hardware
 class NfcProvider(private val isoDep: IsoDep) : com.github.devnied.emvnfccard.parser.IProvider {
     override fun transceive(pCommand: ByteArray): ByteArray = isoDep.transceive(pCommand)
     override fun getAt(): ByteArray = isoDep.historicalBytes ?: isoDep.hiLayerResponse ?: byteArrayOf()
@@ -31,6 +31,8 @@ class MainActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
     private var nfcAdapter: NfcAdapter? = null
     private lateinit var cardNumberText: TextView
     private lateinit var expiryText: TextView
+    private lateinit var nameText: TextView
+    private lateinit var typeText: TextView
     private lateinit var statusText: TextView
     private var lastReadNumber: String = ""
 
@@ -54,7 +56,6 @@ class MainActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
         }
         rootLayout.addView(header)
 
-        // Visual Card Container
         val cardView = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             setBackgroundResource(android.R.drawable.dialog_holo_light_frame)
@@ -86,10 +87,27 @@ class MainActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
             setTextColor(Color.BLACK)
         }
 
+        nameText = TextView(this).apply {
+            text = "CARDHOLDER NAME"
+            textSize = 16f
+            setTextColor(Color.BLACK)
+        }
+
+        typeText = TextView(this).apply {
+            text = "CARD TYPE"
+            textSize = 14f
+            setTextColor(Color.BLACK)
+        }
+
         cardView.addView(createLabel("CARD NUMBER"))
         cardView.addView(cardNumberText)
         cardView.addView(createLabel("EXPIRY DATE"))
         cardView.addView(expiryText)
+        cardView.addView(createLabel("CARDHOLDER NAME"))
+        cardView.addView(nameText)
+        cardView.addView(createLabel("CARD TYPE"))
+        cardView.addView(typeText)
+
         rootLayout.addView(cardView)
 
         // Copy Button
@@ -114,22 +132,16 @@ class MainActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
         rootLayout.addView(copyButton)
 
         statusText = TextView(this).apply {
-            text = "Hold card to back of phone"
+            text = "Hold card to the back of the phone"
             textSize = 14f
             gravity = Gravity.CENTER
             setTextColor(Color.parseColor("#4A90E2"))
             setPadding(0, 60, 0, 0)
         }
         rootLayout.addView(statusText)
-
         setContentView(rootLayout)
 
-        // Initialise NFC
         nfcAdapter = NfcAdapter.getDefaultAdapter(this)
-        if (nfcAdapter == null) {
-            statusText.text = "Error: NFC Not Supported"
-            statusText.setTextColor(Color.RED)
-        }
     }
 
     override fun onResume() {
@@ -164,13 +176,15 @@ class MainActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
             runOnUiThread {
                 lastReadNumber = card.cardNumber ?: ""
                 cardNumberText.text = lastReadNumber.chunked(4).joinToString(" ")
+                nameText.text = card.holderFirstname ?: card.holderLastname ?: "Name Not Found"
+                typeText.text = card.type.getName() // e.g., VISA, MASTERCARD
 
                 card.expireDate?.let {
                     val sdf = SimpleDateFormat("MM/yy", Locale.UK)
                     expiryText.text = sdf.format(it)
                 }
 
-                statusText.text = "✅ Success"
+                statusText.text = "✅ Details Loaded"
                 statusText.setTextColor(Color.parseColor("#2ECC71"))
             }
         } catch (e: Exception) {
